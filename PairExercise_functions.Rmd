@@ -75,6 +75,29 @@ x2power(3,2)
 
 Write your self a function that takes in three variables, a, b, and c
 and returns (a+b)/c
+```{r}
+
+
+practice <- function(a, b, c)
+{
+  
+ if(!is.numeric(a))
+  {
+    cat("Please enter only numeric values of a \n")
+    return(NULL)
+  }
+  if(!is.numeric(b))
+  {
+     cat("Please enter only numeric values of b \n")
+     return(NULL)
+  } 
+   output <- (a+b)/c
+return(output)
+}
+
+practice(15,1,6)
+```
+
 
 
 #Default values
