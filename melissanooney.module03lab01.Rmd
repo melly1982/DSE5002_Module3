@@ -1,0 +1,196 @@
+---
+title: "Week 3 Exercises"
+author: "Melissa Nooney"
+date: "07/14/2024"
+output: pdf_document
+---
+
+Please complete all exercises below. You may use any library that we have covered in class UP TO THIS POINT. 
+
+For each function,  show that it works, by using the provided data as a test
+and by feeding in some test data that you create to test your function
+
+Add comments to your function to explain what each line is doing
+```{r}
+library(stringr)
+library(tinytex)
+library(lubridate)
+```
+
+
+1.) Write a function that takes in a string with a person's name in the form
+
+"Sheets, Dave"
+
+and returns a string of the form
+
+"Dave Sheets"
+
+Note:
+
+-assume no middle initial ever
+-remove the comma
+-be sure there is white space between the first and last name
+
+You will probably want to use stringr
+
+```{R}
+name_in="Sheets,Dave" #test variable
+name_2 <- "Nooney,Melissa" #new variable with own input
+
+reorder_name<-function(last_first){ #function name, and argument(variable) 
+                                      #it will take, followed by function body
+  name_reverse <- paste(str_split(last_first, pattern = ",") 
+                        [[1]][c(2,1)], collapse = " ")
+  #used nested function body, splitting the string variable to create list of 
+  #two separate names and removing comma. Then pasting by selecting list 1 and
+  #reordering and combining the values, collapsing with a space
+
+  return(name_reverse) #the function will return output
+}
+reorder_name(name_in)
+reorder_name(name_2)
+
+
+```
+
+
+
+2.) Write a function that takes in a string of values x, and returns a data frame
+with three columns,  x, x^2 and the square root of x
+
+```{R}
+x=c(1,3,5,7,9,11,13)
+y = c(2, 4, 6, 8, 10, 12, 15) #my new test vector
+powers_df<-function(x){ #function name and takes argument x
+  powers_calcs <- data.frame( #create a data frame called powercalcs,
+                          # created 3 columns with corresponding calculations
+    values_only = c(x),
+    squared = c(x^2),
+    sq_rt = sqrt(x) 
+  )
+  
+  
+
+return(powers_calcs)
+}
+powers_df(x)
+new_powers <- powers_df(y) #just added the assignment for funsies
+
+
+
+```
+
+
+3) Two Sum - Write a function named two_sum()
+
+Given a vector of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+You can return the answer in any order.
+
+Example 1:
+
+Input: nums = [2,7,11,15], target = 9
+Output: [0,1]
+Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
+Example 2:
+
+Input: nums = [3,2,4], target = 6
+Output: [1,2]
+Example 3:
+
+Input: nums = [3,3], target = 6
+Output: [0,1]
+
+Constraints:
+
+2 <= nums.length <= 104
+–109 <= nums[i] <= 109
+–109 <= target <= 109
+Only one valid answer exists.
+ 
+
+*Note: For the first problem I want you to use a brute force approach (loop inside a loop)* 
+
+*The brute force approach is simple. Loop through each element x and find if there is another value that equals to target – x*
+
+*Use the function seq_along to iterate*
+
+```{r}
+two_sum <- function(nums_vector,target){ #naming the function and arguments it takes
+    for (i in seq_along(nums_vector)) { #first loop
+        for (j in seq_along(nums_vector)) { #second loop
+            sum <- nums_vector[i] + nums_vector[j] #what i want the loops to do
+                                #or interact with each other
+            if (sum == target) { #if statement that will print only the sums if
+                                #equal to target is TRUE
+                one <- i #first index
+                two <- j #second index
+                indices <- c(one, two) #what my output will look like
+                return(indices) #values actually returned
+            }
+        }
+    }
+}
+
+
+
+
+# Test code
+nums_vector <- c(5,7,12,34,6,10,8,9)
+target <- 13
+ 
+z<-two_sum(nums_vector,target)
+print(z)
+#expected answers
+#[1] 1 7
+#[1] 2 5
+#[1] 5 2
+
+#Definitely needed google to help me piece this and my thoughts together.
+#I still don't think it's fully correct as it only returns one set of indices. 
+#I know I needed two loops, and a formula within, but I had trouble with the
+#order, and annotations. 
+
+```
+
+Okay tough problem coming here!  Look carefully at Jeremiah's examples of using
+a hash to simplify a loop by using a hash.  
+
+4) Now write the same function using hash tables.
+
+Loop the array once to make a hash map of the value to its index. Then loop again to find if the value of target-current value is in the map.
+
+*The keys of your hash table should be each of the numbers in the nums_vector minus the target. *
+
+*A simple implementation uses two iterations. In the first iteration, we add each element's value as a key and its index (array position) as a value to the hash table. Then, in the second iteration, we check if each element's complement (target – nums_vector[i]) exists in the hash table. If it does exist, we return current element's index and its complement's index. Beware that the complement must not be nums_vector[i] itself!*
+
+```{r}
+#This problem really was just me staring at the screen. I could not understand
+#unless I just copy/paste from google which I dont want to do, so leaving blank. 
+
+library(hash)
+
+
+
+
+two_sum2 <- function(nums_vector,target)
+  
+  
+
+# Test code
+nums_vector <- c(5,7,12,34,6,10,8,9)
+target <- 15
+ 
+two_sum(nums_vector,target)
+#expected answers
+#[1] 1 6
+#[1] 2 7
+#[1] 5 8
+#[1] 61
+#[1] 7 2
+#[1] 8 5
+
+```
